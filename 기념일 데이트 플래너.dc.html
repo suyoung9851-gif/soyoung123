@@ -1,0 +1,1032 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;600&family=Noto+Sans+KR:wght@300;400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="./image-slot.js"></script>
+<template id="__bundler_thumbnail"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="#d8c3a5"></rect><text x="50" y="62" text-anchor="middle" font-family="sans-serif" font-size="30" font-weight="300" fill="#2a1f17">OD</text></svg></template>
+<style>
+body{margin:0;background:#d8c3a5;color:#2a1f17;font-family:'Noto Sans KR',sans-serif;-webkit-font-smoothing:antialiased;color-scheme:light;word-break:keep-all}
+a{color:#5a4230}a:hover{color:#2a1f17}
+*{box-sizing:border-box}
+button{font-family:inherit;cursor:pointer}
+select,input{font-family:inherit}
+@keyframes gm-spin{to{transform:rotate(360deg)}}
+</style>
+</helmet>
+<div style="min-height:100vh;display:flex;flex-direction:column">
+  <header style="position:sticky;top:0;z-index:5;background:rgba(216,195,165,0.92);backdrop-filter:blur(8px);border-bottom:1px solid #c2a886">
+    <div style="max-width:1080px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap">
+      <button onClick="{{ goHome }}" style="background:none;border:none;padding:0;display:flex;align-items:center;gap:10px;color:#2a1f17">
+        <span style="width:12px;height:12px;border-radius:50%;background:#3d2b1f"></span>
+        <span style="font-family:'Noto Sans KR',sans-serif;font-size:20px;font-weight:700">Our Day</span>
+      </button>
+      <nav style="display:flex;gap:4px;flex-wrap:wrap">
+        <button onClick="{{ goInput }}" style="border:none;border-radius:999px;padding:8px 14px;font-size:14px;background:{{ navPlanBg }};color:#2a1f17">기념일 플랜 만들기</button>
+        <button onClick="{{ goPopular }}" style="border:none;border-radius:999px;padding:8px 14px;font-size:14px;background:{{ navPopBg }};color:#2a1f17">인기 코스</button>
+        <button onClick="{{ goEvent }}" style="border:none;border-radius:999px;padding:8px 14px;font-size:14px;background:{{ navEventBg }};color:#2a1f17">오늘의 이벤트·쿠폰</button>
+        <button onClick="{{ goChat }}" style="border:none;border-radius:999px;padding:8px 14px;font-size:14px;background:{{ navChatBg }};color:#2a1f17">같이 고민하기</button>
+        <button onClick="{{ goWish }}" style="border:none;border-radius:999px;padding:8px 14px;font-size:14px;background:{{ navWishBg }};color:#2a1f17">찜 목록 {{ wishCount }}</button>
+      </nav>
+    </div>
+  </header>
+
+  <main style="flex:1;width:100%;max-width:1080px;margin:0 auto;padding:0 24px 80px">
+
+    <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+      <section data-screen-label="01 홈" style="padding:96px 0 64px;display:flex;flex-direction:column;gap:28px">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:13px;letter-spacing:0.08em;color:#5a4230">ANNIVERSARY PLANNER</div>
+        <div style="display:flex;flex-direction:column;gap:14px">
+          <h1 style="margin:0;font-family:'Josefin Sans',sans-serif;font-weight:300;font-size:clamp(48px,8.5vw,104px);line-height:1.05;letter-spacing:-0.01em;text-wrap:pretty;max-width:860px">Ready for our special date?</h1>
+          <span style="font-family:'Noto Sans KR',sans-serif;font-size:15px;font-weight:300;letter-spacing:-0.01em;color:#4a3829">우리의 기념일, 코스부터 저녁과 선물까지 한 번에</span>
+        </div>
+        <p style="margin:0;font-size:15px;line-height:1.7;color:#6b5443;max-width:580px;text-wrap:pretty">마음에 쏙 들 선물을 고르고 코스를 짜는 일, 생각보다 어렵죠. MBTI에 평소 좋아하는 것과 성격까지 더해 하나하나 세세하게 골라드려요. 연인은 당일까지 모르게, 서프라이즈로.</p>
+        <div style="display:flex;gap:12px;flex-wrap:wrap">
+          <button onClick="{{ goInput }}" style="border:none;border-radius:999px;padding:16px 28px;font-size:16px;font-weight:600;background:#3d2b1f;color:#efe3d2" style-hover="background:#2a1f17"><span style="font-family:'Josefin Sans',sans-serif;font-size:19px;font-weight:400;letter-spacing:0.02em">Let’s go</span></button>
+        </div>
+        <div style="margin-top:48px;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1px;background:#c2a886;border:1px solid #c2a886;border-radius:16px;overflow:hidden">
+          <div style="background:#f0e6d8;padding:24px;display:flex;flex-direction:column;gap:8px">
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#7a6250">01</span>
+            <span style="font-size:17px;font-weight:600">데이트 코스</span>
+            <span style="font-size:14px;color:#6b5443;line-height:1.6">점심부터 밤까지 시간대별로</span>
+          </div>
+          <div style="background:#f0e6d8;padding:24px;display:flex;flex-direction:column;gap:8px">
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#7a6250">02</span>
+            <span style="font-size:17px;font-weight:600">점심 밥집</span>
+            <span style="font-size:14px;color:#6b5443;line-height:1.6">가볍고 편하게, 취향대로</span>
+          </div>
+          <div style="background:#f0e6d8;padding:24px;display:flex;flex-direction:column;gap:8px">
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#7a6250">03</span>
+            <span style="font-size:17px;font-weight:600">특별한 저녁</span>
+            <span style="font-size:14px;color:#6b5443;line-height:1.6">기념일에 어울리는 한 끼</span>
+          </div>
+          <div style="background:#f0e6d8;padding:24px;display:flex;flex-direction:column;gap:8px">
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#7a6250">04</span>
+            <span style="font-size:17px;font-weight:600">선물</span>
+            <span style="font-size:14px;color:#6b5443;line-height:1.6">MBTI와 별자리로 고른</span>
+          </div>
+          <div style="background:#f0e6d8;padding:24px;display:flex;flex-direction:column;gap:8px">
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#7a6250">05</span>
+            <span style="font-size:17px;font-weight:600">부가 서비스</span>
+            <span style="font-size:14px;color:#6b5443;line-height:1.6">꽃다발, 레터링 케이크, 스냅까지</span>
+          </div>
+        </div>
+      </section>
+    </sc-if>
+
+    <sc-if value="{{ isInput }}" hint-placeholder-val="{{ false }}">
+      <section data-screen-label="02 정보 입력" style="padding:56px 0;max-width:680px;margin:0 auto;display:flex;flex-direction:column;gap:44px">
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:#5a4230">{{ progressText }}</div>
+          <h2 style="margin:0;font-family:'Noto Sans KR',sans-serif;font-size:34px;line-height:1.3">우리의 기념일을 알려주세요</h2>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:14px">
+          <label style="font-size:15px;font-weight:600">어떤 기념일인가요?</label>
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <sc-for list="{{ occasions }}" as="o" hint-placeholder-count="7">
+              <button onClick="{{ o.pick }}" style="border:1px solid {{ o.border }};border-radius:999px;padding:10px 16px;font-size:15px;background:{{ o.bg }};color:{{ o.fg }}">{{ o.label }}</button>
+            </sc-for>
+          </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px">
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <label style="font-size:15px;font-weight:600">기념일 날짜</label>
+            <input type="date" value="{{ annDate }}" onChange="{{ onAnnDate }}" style="border:1px solid #b0946f;border-radius:12px;padding:13px 14px;font-size:16px;background:#e6d6bf;color:#2a1f17">
+            <sc-if value="{{ hasDday }}" hint-placeholder-val="{{ false }}">
+              <span style="font-size:14px;color:#5a4230">{{ ddayText }}</span>
+            </sc-if>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <label style="font-size:15px;font-weight:600">연인 이름 또는 애칭 <span style="font-weight:400;color:#7a6250">(선택)</span></label>
+            <input value="{{ name }}" onChange="{{ onName }}" placeholder="예: 자기" style="border:1px solid #b0946f;border-radius:12px;padding:13px 14px;font-size:16px;background:#e6d6bf;color:#2a1f17;outline:none">
+          </div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:14px">
+          <div style="display:flex;justify-content:space-between;align-items:baseline">
+            <label style="font-size:15px;font-weight:600">연인의 MBTI</label>
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:20px;letter-spacing:0.1em;color:#5a4230">{{ mbtiPreview }}</span>
+          </div>
+          <sc-for list="{{ axes }}" as="ax" hint-placeholder-count="4">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+              <sc-for list="{{ ax.opts }}" as="op" hint-placeholder-count="2">
+                <button onClick="{{ op.pick }}" style="border:1px solid {{ op.border }};border-radius:12px;padding:12px 16px;text-align:left;background:{{ op.bg }};color:{{ op.fg }};display:flex;flex-direction:column;gap:4px;min-height:60px">
+                  <span style="font-family:'IBM Plex Mono',monospace;font-size:18px;font-weight:500">{{ op.letter }}</span>
+                  <span style="font-size:13px;opacity:0.85">{{ op.label }}</span>
+                </button>
+              </sc-for>
+            </div>
+          </sc-for>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:22px;background:#e6d6bf;border:1px solid #c2a886;border-radius:18px;padding:22px">
+          <div style="display:flex;flex-direction:column;gap:4px">
+            <span style="font-size:17px;font-weight:700">연인을 더 자세히 알려주세요</span>
+            <span style="font-size:13px;color:#6b5443">많이 고를수록 추천이 정확해져요. MBTI보다 취향을 더 크게 반영해요.</span>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <div style="display:flex;justify-content:space-between;align-items:baseline"><label style="font-size:15px;font-weight:600">평소 좋아하는 것</label><span style="font-size:12px;color:#7a6250">{{ likeCountText }}</span></div>
+            <div style="display:flex;gap:6px;flex-wrap:wrap">
+              <sc-for list="{{ likeChips }}" as="c" hint-placeholder-count="14">
+                <button onClick="{{ c.pick }}" style="border:1px solid {{ c.border }};border-radius:999px;padding:8px 14px;font-size:14px;background:{{ c.bg }};color:{{ c.fg }}">{{ c.label }}</button>
+              </sc-for>
+            </div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <div style="display:flex;justify-content:space-between;align-items:baseline"><label style="font-size:15px;font-weight:600">성격</label><span style="font-size:12px;color:#7a6250">최대 3개</span></div>
+            <div style="display:flex;gap:6px;flex-wrap:wrap">
+              <sc-for list="{{ personaChips }}" as="c" hint-placeholder-count="8">
+                <button onClick="{{ c.pick }}" style="border:1px solid {{ c.border }};border-radius:999px;padding:8px 14px;font-size:14px;background:{{ c.bg }};color:{{ c.fg }}">{{ c.label }}</button>
+              </sc-for>
+            </div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <label style="font-size:15px;font-weight:600">이건 피하고 싶어요</label>
+            <div style="display:flex;gap:6px;flex-wrap:wrap">
+              <sc-for list="{{ dislikeChips }}" as="c" hint-placeholder-count="5">
+                <button onClick="{{ c.pick }}" style="border:1px dashed {{ c.border }};border-radius:999px;padding:8px 14px;font-size:14px;background:{{ c.bg }};color:{{ c.fg }}">{{ c.label }}</button>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:14px">
+          <label style="font-size:15px;font-weight:600">연인의 생년월일</label>
+          <div style="display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:10px">
+            <select value="{{ y }}" onChange="{{ onY }}" style="border:1px solid #b0946f;border-radius:12px;padding:14px 12px;font-size:16px;background:#e6d6bf;color:#2a1f17">
+              <option value="">생년</option>
+              <sc-for list="{{ years }}" as="o"><option value="{{ o.v }}">{{ o.t }}</option></sc-for>
+            </select>
+            <select value="{{ m }}" onChange="{{ onM }}" style="border:1px solid #b0946f;border-radius:12px;padding:14px 12px;font-size:16px;background:#e6d6bf;color:#2a1f17">
+              <option value="">생월</option>
+              <sc-for list="{{ months }}" as="o"><option value="{{ o.v }}">{{ o.t }}</option></sc-for>
+            </select>
+            <select value="{{ d }}" onChange="{{ onD }}" style="border:1px solid #b0946f;border-radius:12px;padding:14px 12px;font-size:16px;background:#e6d6bf;color:#2a1f17">
+              <option value="">생일</option>
+              <sc-for list="{{ days }}" as="o"><option value="{{ o.v }}">{{ o.t }}</option></sc-for>
+            </select>
+          </div>
+          <sc-if value="{{ hasDatePreview }}" hint-placeholder-val="{{ false }}">
+            <div style="font-size:14px;color:#6b5443">{{ datePreview }}</div>
+          </sc-if>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:14px">
+          <label style="font-size:15px;font-weight:600">하루 전체 예산 <span style="font-weight:400;color:#7a6250">(식사 + 선물, 2인)</span></label>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px">
+            <sc-for list="{{ budgets }}" as="b" hint-placeholder-count="3">
+              <button onClick="{{ b.pick }}" style="border:1px solid {{ b.border }};border-radius:12px;padding:14px;font-size:15px;background:{{ b.bg }};color:{{ b.fg }};display:flex;flex-direction:column;gap:2px;align-items:flex-start">
+                <span style="font-weight:600">{{ b.label }}</span>
+                <span style="font-size:12px;opacity:0.8">{{ b.sub }}</span>
+              </button>
+            </sc-for>
+          </div>
+        </div>
+
+        <button onClick="{{ toggleSurprise }}" style="display:grid;grid-template-columns:minmax(0,1fr) auto;gap:16px;align-items:center;text-align:left;border:1px solid {{ surpriseBorder }};border-radius:16px;padding:18px 20px;background:{{ surpriseBg }};color:{{ surpriseFg }}">
+          <span style="display:flex;flex-direction:column;gap:4px">
+            <span style="font-size:16px;font-weight:700">서프라이즈 모드</span>
+            <span style="font-size:13px;opacity:0.8;line-height:1.5">연인과 같이 보는 톡에서는 장소와 선물 이름을 가리고, 당일에 공개돼요.</span>
+          </span>
+          <span style="width:48px;height:28px;border-radius:999px;background:{{ switchTrack }};display:flex;align-items:center;padding:3px;justify-content:{{ switchAlign }}"><span style="width:22px;height:22px;border-radius:50%;background:#efe3d2"></span></span>
+        </button>
+
+        <button onClick="{{ submit }}" style="border:none;border-radius:999px;padding:18px;font-size:17px;font-weight:600;background:{{ submitBg }};color:#efe3d2">우리만의 기념일 플랜 받기</button>
+      </section>
+    </sc-if>
+
+    <sc-if value="{{ isLoading }}" hint-placeholder-val="{{ false }}">
+      <section style="padding:160px 0;display:flex;flex-direction:column;align-items:center;gap:20px;text-align:center">
+        <div style="width:44px;height:44px;border-radius:50%;border:3px solid #c2a886;border-top-color:#3d2b1f;animation:gm-spin 0.9s linear infinite"></div>
+        <div style="font-family:'Noto Sans KR',sans-serif;font-size:24px">{{ occLabel }} 플랜을 짜는 중</div>
+        <div style="font-size:14px;color:#6b5443">{{ mbtiPreview }} · {{ zodiacText }} · {{ seasonText }}</div>
+      </section>
+    </sc-if>
+
+    <sc-if value="{{ isResult }}" hint-placeholder-val="{{ false }}">
+      <section data-screen-label="03 기념일 플랜" style="padding:56px 0;display:flex;flex-direction:column;gap:48px">
+        <div style="display:flex;flex-direction:column;gap:14px">
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:#5a4230">{{ resultKicker }}</div>
+          <h2 style="margin:0;font-family:'Noto Sans KR',sans-serif;font-size:clamp(28px,4.5vw,44px);line-height:1.3;text-wrap:pretty">{{ nameWa }} 함께하는 {{ occLabel }}</h2>
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <sc-for list="{{ profileChips }}" as="c" hint-placeholder-count="4">
+              <span style="border:1px solid #c2a886;background:#e6d6bf;border-radius:999px;padding:6px 12px;font-size:13px">{{ c.t }}</span>
+            </sc-for>
+          </div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:20px">
+          <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:12px;flex-wrap:wrap">
+            <div style="display:flex;flex-direction:column;gap:6px">
+              <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#7a6250">01 · DATE COURSE</span>
+              <h3 style="margin:0;font-family:'Noto Sans KR',sans-serif;font-size:28px">추천 데이트 코스</h3>
+            </div>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+              <div style="display:flex;padding:4px;border-radius:999px;background:#c7ad8b;gap:2px">
+                <sc-for list="{{ transports }}" as="t" hint-placeholder-count="2">
+                  <button onClick="{{ t.pick }}" style="border:none;border-radius:999px;padding:8px 16px;font-size:14px;background:{{ t.bg }};color:{{ t.fg }}">{{ t.label }}</button>
+                </sc-for>
+              </div>
+              <button onClick="{{ shuffle }}" style="border:1px solid #b0946f;border-radius:999px;padding:10px 18px;font-size:14px;background:#e6d6bf;color:#2a1f17">코스 다시 섞기</button>
+            </div>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1px;background:#c2a886;border:1px solid #c2a886;border-radius:14px;overflow:hidden">
+            <sc-for list="{{ moveStats }}" as="m" hint-placeholder-count="3">
+              <div style="background:#f0e6d8;padding:16px 18px;display:flex;flex-direction:column;gap:4px">
+                <span style="font-size:12px;color:#6b5443">{{ m.k }}</span>
+                <span style="font-size:17px;font-weight:600">{{ m.v }}</span>
+              </div>
+            </sc-for>
+          </div>
+          <div style="display:flex;flex-direction:column;background:#e6d6bf;border:1px solid #c2a886;border-radius:18px;padding:8px 24px">
+            <sc-for list="{{ courseRows }}" as="c" hint-placeholder-count="5">
+              <sc-if value="{{ c.isStep }}" hint-placeholder-val="{{ true }}">
+                <div style="display:grid;grid-template-columns:64px 20px minmax(0,1fr);gap:14px;padding:18px 0 14px">
+                  <span style="font-family:'IBM Plex Mono',monospace;font-size:15px;padding-top:2px">{{ c.time }}</span>
+                  <span style="width:12px;height:12px;margin-top:6px;border-radius:50%;background:{{ c.dot }}"></span>
+                  <div style="display:flex;flex-direction:column;gap:4px">
+                    <span style="font-size:12px;color:#7a6250">{{ c.kind }}</span>
+                    <span style="font-size:18px;font-weight:600">{{ c.title }}</span>
+                    <span style="font-size:14px;color:#6b5443;line-height:1.6">{{ c.note }}</span>
+                  </div>
+                </div>
+              </sc-if>
+              <sc-if value="{{ c.isMove }}" hint-placeholder-val="{{ false }}">
+                <div style="display:grid;grid-template-columns:64px 20px minmax(0,1fr);gap:14px">
+                  <span></span>
+                  <span style="width:2px;margin-left:5px;background:repeating-linear-gradient(#b0946f 0 4px,transparent 4px 8px)"></span>
+                  <div style="margin:4px 0;padding:12px 14px;border-radius:12px;background:#f0e6d8;border:1px solid #c2a886;display:flex;flex-direction:column;gap:4px">
+                    <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+                      <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.06em;padding:3px 8px;border-radius:6px;background:#3d2b1f;color:#efe3d2">{{ c.modeTag }}</span>
+                      <span style="font-size:14px;font-weight:600">{{ c.how }}</span>
+                    </div>
+                    <span style="font-size:13px;color:#6b5443;line-height:1.55">{{ c.tip }}</span>
+                  </div>
+                </div>
+              </sc-if>
+            </sc-for>
+          </div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:20px">
+          <div style="display:flex;flex-direction:column;gap:6px">
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#7a6250">02 · LUNCH</span>
+            <h3 style="margin:0;font-family:'Noto Sans KR',sans-serif;font-size:28px">점심 밥집 추천</h3>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,260px),1fr));gap:16px">
+            <sc-for list="{{ lunches }}" as="g" hint-placeholder-count="3">
+              <article style="background:#e6d6bf;border:1px solid #c2a886;border-radius:16px;overflow:hidden;display:flex;flex-direction:column">
+                <div style="aspect-ratio:16/10;background:repeating-linear-gradient(135deg,#d0b998 0 10px,#dcc7a9 10px 20px);display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:11px;color:#7a6250;position:relative">
+                  <image-slot id="img-{{ g.id }}" shape="rect" placeholder="{{ g.imgLabel }}" style="position:absolute;inset:0"></image-slot>
+                  <span style="position:absolute;top:12px;left:12px;background:#3d2b1f;color:#efe3d2;font-family:'IBM Plex Mono',monospace;font-size:12px;padding:4px 10px;border-radius:999px">{{ g.rankText }}</span>
+                </div>
+                <div style="padding:18px;display:flex;flex-direction:column;gap:8px;flex:1">
+                  <div style="display:flex;justify-content:space-between;font-size:12px;color:#6b5443"><span>{{ g.cat }}</span><span>{{ g.priceText }}</span></div>
+                  <div style="font-family:'Noto Sans KR',sans-serif;font-size:20px;font-weight:700;line-height:1.35">{{ g.name }}</div>
+                  <div style="font-size:14px;color:#4a3829;line-height:1.6">{{ g.desc }}</div>
+                  <div style="font-size:13px;color:#5a4230;line-height:1.55;flex:1">추천 이유 · {{ g.reason }}</div>
+                  <sc-if value="{{ g.hasReviews }}" hint-placeholder-val="{{ false }}">
+                    <div style="border-top:1px solid #c2a886;padding-top:12px;display:flex;flex-direction:column;gap:10px">
+                      <div style="display:flex;justify-content:space-between;font-size:13px"><span style="font-weight:600">★ {{ g.ratingText }}</span><span style="color:#6b5443">방문 후기 {{ g.reviewCount }}개</span></div>
+                      <sc-for list="{{ g.reviews }}" as="rv" hint-placeholder-count="2">
+                        <div style="display:flex;flex-direction:column;gap:3px">
+                          <span style="font-size:11px;color:#7a6250">{{ rv.who }} · {{ rv.stars }}</span>
+                          <span style="font-size:13px;line-height:1.55">“{{ rv.text }}”</span>
+                        </div>
+                      </sc-for>
+                    </div>
+                  </sc-if>
+                  <button onClick="{{ g.toggle }}" style="margin-top:6px;border:1px solid {{ g.heartBorder }};border-radius:10px;padding:11px;font-size:14px;background:{{ g.heartBg }};color:{{ g.heartFg }}">{{ g.heartLabel }}</button>
+                  <button onClick="{{ g.share }}" style="border:1px dashed currentColor;border-radius:10px;padding:10px;font-size:13px;background:transparent;color:inherit">{{ g.shareLabel }}</button>
+                </div>
+              </article>
+            </sc-for>
+          </div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:20px;background:#2a1f17;color:#efe3d2;border-radius:24px;padding:clamp(20px,4vw,40px);margin:0 -4px">
+          <div style="display:flex;flex-direction:column;gap:6px">
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#c9b08f">03 · SPECIAL DINNER</span>
+            <h3 style="margin:0;font-family:'Noto Sans KR',sans-serif;font-size:28px">특별한 저녁 식사</h3>
+            <p style="margin:0;font-size:14px;color:#b9a48c">{{ dinnerTip }}</p>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));gap:16px">
+            <sc-for list="{{ dinners }}" as="g" hint-placeholder-count="2">
+              <article style="background:#3a2c22;border-radius:16px;overflow:hidden;display:flex;flex-direction:column">
+                <div style="aspect-ratio:16/9;background:repeating-linear-gradient(135deg,#443b34 0 10px,#4b4139 10px 20px);display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:11px;color:#b3a89d;position:relative">
+                  <image-slot id="img-{{ g.id }}" shape="rect" placeholder="{{ g.imgLabel }}" style="position:absolute;inset:0"></image-slot>
+                  <span style="position:absolute;top:12px;left:12px;background:#d8c3a5;color:#2a1f17;font-family:'IBM Plex Mono',monospace;font-size:12px;padding:4px 10px;border-radius:999px">{{ g.rankText }}</span>
+                </div>
+                <div style="padding:18px;display:flex;flex-direction:column;gap:8px;flex:1">
+                  <div style="display:flex;justify-content:space-between;font-size:12px;color:#b9a48c"><span>{{ g.cat }}</span><span>{{ g.priceText }}</span></div>
+                  <div style="font-family:'Noto Sans KR',sans-serif;font-size:21px;font-weight:700;line-height:1.35">{{ g.name }}</div>
+                  <div style="font-size:14px;color:#dccbb5;line-height:1.6">{{ g.desc }}</div>
+                  <div style="font-size:13px;color:#c9b08f;line-height:1.55;flex:1">추천 이유 · {{ g.reason }}</div>
+                  <sc-if value="{{ g.hasReviews }}" hint-placeholder-val="{{ false }}">
+                    <div style="border-top:1px solid #5a4a3e;padding-top:12px;display:flex;flex-direction:column;gap:10px">
+                      <div style="display:flex;justify-content:space-between;font-size:13px"><span style="font-weight:600">★ {{ g.ratingText }}</span><span style="color:#b9a48c">방문 후기 {{ g.reviewCount }}개</span></div>
+                      <sc-for list="{{ g.reviews }}" as="rv" hint-placeholder-count="2">
+                        <div style="display:flex;flex-direction:column;gap:3px">
+                          <span style="font-size:11px;color:#b9a48c">{{ rv.who }} · {{ rv.stars }}</span>
+                          <span style="font-size:13px;line-height:1.55;color:#efe3d2">“{{ rv.text }}”</span>
+                        </div>
+                      </sc-for>
+                    </div>
+                  </sc-if>
+                  <button onClick="{{ g.toggle }}" style="margin-top:6px;border:1px solid {{ g.darkBorder }};border-radius:10px;padding:11px;font-size:14px;background:{{ g.darkBg }};color:#efe3d2">{{ g.heartLabel }}</button>
+                  <button onClick="{{ g.share }}" style="border:1px dashed currentColor;border-radius:10px;padding:10px;font-size:13px;background:transparent;color:inherit">{{ g.shareLabel }}</button>
+                </div>
+              </article>
+            </sc-for>
+          </div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:20px">
+          <div style="display:flex;flex-direction:column;gap:6px">
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#85776a">04 · GIFT</span>
+            <h3 style="margin:0;font-family:'Noto Sans KR',sans-serif;font-size:28px">{{ nameOr }}에게 건넬 선물</h3>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,260px),1fr));gap:16px">
+            <sc-for list="{{ gifts }}" as="g" hint-placeholder-count="3">
+              <article style="background:#e6d6bf;border:1px solid #c2a886;border-radius:16px;overflow:hidden;display:flex;flex-direction:column">
+                <div style="aspect-ratio:4/3;background:repeating-linear-gradient(135deg,#d0b998 0 10px,#dcc7a9 10px 20px);display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:11px;color:#7a6250;position:relative">
+                  <image-slot id="img-{{ g.id }}" shape="rect" placeholder="{{ g.imgLabel }}" style="position:absolute;inset:0"></image-slot>
+                  <span style="position:absolute;top:12px;left:12px;background:#3d2b1f;color:#efe3d2;font-family:'IBM Plex Mono',monospace;font-size:12px;padding:4px 10px;border-radius:999px">{{ g.rankText }}</span>
+                </div>
+                <div style="padding:18px;display:flex;flex-direction:column;gap:8px;flex:1">
+                  <div style="display:flex;justify-content:space-between;font-size:12px;color:#6b5443"><span>{{ g.cat }}</span><span>{{ g.priceText }}</span></div>
+                  <div style="font-family:'Noto Sans KR',sans-serif;font-size:20px;font-weight:700;line-height:1.35">{{ g.name }}</div>
+                  <div style="font-size:14px;color:#4a3829;line-height:1.6">{{ g.desc }}</div>
+                  <div style="font-size:13px;color:#5a4230;line-height:1.55;flex:1">추천 이유 · {{ g.reason }}</div>
+                  <sc-if value="{{ g.hasReviews }}" hint-placeholder-val="{{ false }}">
+                    <div style="border-top:1px solid #c2a886;padding-top:12px;display:flex;flex-direction:column;gap:10px">
+                      <div style="display:flex;justify-content:space-between;font-size:13px"><span style="font-weight:600">★ {{ g.ratingText }}</span><span style="color:#6b5443">방문 후기 {{ g.reviewCount }}개</span></div>
+                      <sc-for list="{{ g.reviews }}" as="rv" hint-placeholder-count="2">
+                        <div style="display:flex;flex-direction:column;gap:3px">
+                          <span style="font-size:11px;color:#7a6250">{{ rv.who }} · {{ rv.stars }}</span>
+                          <span style="font-size:13px;line-height:1.55">“{{ rv.text }}”</span>
+                        </div>
+                      </sc-for>
+                    </div>
+                  </sc-if>
+                  <button onClick="{{ g.toggle }}" style="margin-top:6px;border:1px solid {{ g.heartBorder }};border-radius:10px;padding:11px;font-size:14px;background:{{ g.heartBg }};color:{{ g.heartFg }}">{{ g.heartLabel }}</button>
+                  <button onClick="{{ g.share }}" style="border:1px dashed currentColor;border-radius:10px;padding:10px;font-size:13px;background:transparent;color:inherit">{{ g.shareLabel }}</button>
+                </div>
+              </article>
+            </sc-for>
+          </div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:20px">
+          <div style="display:flex;flex-direction:column;gap:6px">
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#7a6250">05 · ADD-ON</span>
+            <h3 style="margin:0;font-family:'Noto Sans KR',sans-serif;font-size:28px">부가 서비스로 더 특별하게</h3>
+            <p style="margin:0;font-size:14px;color:#6b5443">필요한 것만 담으면 데이트 코스와 예상 비용에 바로 반영돼요.</p>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,240px),1fr));gap:14px">
+            <sc-for list="{{ addonCards }}" as="a" hint-placeholder-count="6">
+              <div style="background:#e6d6bf;border:1px solid {{ a.cardBorder }};border-radius:16px;padding:18px;display:flex;flex-direction:column;gap:10px">
+                <div style="display:flex;justify-content:space-between;align-items:center;gap:8px">
+                  <span style="font-size:12px;color:#6b5443">{{ a.cat }}</span>
+                  <sc-if value="{{ a.rec }}" hint-placeholder-val="{{ false }}">
+                    <span style="font-size:11px;padding:3px 9px;border-radius:999px;background:#3d2b1f;color:#efe3d2">추천</span>
+                  </sc-if>
+                </div>
+                <div style="font-size:18px;font-weight:600;line-height:1.35">{{ a.name }}</div>
+                <div style="font-size:14px;color:#6b5443;line-height:1.6;flex:1">{{ a.desc }}</div>
+                <div style="display:flex;justify-content:space-between;align-items:center;gap:8px">
+                  <span style="font-size:15px;font-weight:600">{{ a.priceText }}</span>
+                  <button onClick="{{ a.toggle }}" style="border:1px solid {{ a.btnBorder }};border-radius:999px;padding:9px 16px;font-size:14px;background:{{ a.btnBg }};color:{{ a.btnFg }}">{{ a.btnLabel }}</button>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+          <sc-if value="{{ hasLettering }}" hint-placeholder-val="{{ false }}">
+            <div style="background:#2a1f17;color:#efe3d2;border-radius:18px;padding:24px;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:24px;align-items:center">
+              <div style="display:flex;flex-direction:column;gap:10px">
+                <label style="font-size:15px;font-weight:600">레터링 문구</label>
+                <input value="{{ lettering }}" onChange="{{ onLettering }}" maxLength="20" placeholder="예: 우리의 1주년, 사랑해" style="border:1px solid #5a4a3e;border-radius:12px;padding:13px 14px;font-size:16px;background:#3a2c22;color:#efe3d2;outline:none">
+                <span style="font-size:12px;color:#b9a48c">{{ letterCount }} / 20자 · 케이크와 디저트 플레이트에 함께 쓰여요</span>
+              </div>
+              <div style="aspect-ratio:2/1;border-radius:999px;background:#efe3d2;color:#2a1f17;display:flex;align-items:center;justify-content:center;padding:16px 28px;text-align:center;font-family:'Josefin Sans','Noto Sans KR',sans-serif;font-size:24px;line-height:1.3">{{ letterPreview }}</div>
+            </div>
+          </sc-if>
+        </div>
+
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;border-top:1px solid #c2a886;padding-top:24px">
+          <div style="display:flex;flex-direction:column;gap:4px">
+            <span style="font-size:13px;color:#6b5443">예상 비용 (1순위 기준, 2인)</span>
+            <span style="font-size:22px;font-weight:600">{{ totalText }}</span>
+            <sc-if value="{{ hasDiscount }}" hint-placeholder-val="{{ false }}">
+              <span style="font-size:13px;color:#5a4230">{{ discountText }}</span>
+            </sc-if>
+          </div>
+          <div style="display:flex;gap:12px;flex-wrap:wrap">
+            <button onClick="{{ restart }}" style="border:1px solid #b0946f;border-radius:999px;padding:14px 24px;font-size:15px;background:transparent;color:#2a1f17">다시 입력하기</button>
+            <button onClick="{{ goWish }}" style="border:1px solid #b0946f;border-radius:999px;padding:14px 24px;font-size:15px;background:transparent;color:#2a1f17">찜 목록 보기 {{ wishCount }}</button>
+            <button onClick="{{ goCheckout }}" style="border:none;border-radius:999px;padding:14px 28px;font-size:15px;font-weight:600;background:#3d2b1f;color:#efe3d2">이 플랜 그대로 예약·결제하기</button>
+          </div>
+        </div>
+      </section>
+    </sc-if>
+
+    <sc-if value="{{ isCheckout }}" hint-placeholder-val="{{ false }}">
+      <section data-screen-label="08 결제" style="padding:48px 0;display:flex;flex-direction:column;gap:24px">
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:#5a4230">CHECKOUT</div>
+          <h2 style="margin:0;font-family:'Noto Sans KR',sans-serif;font-size:34px">예약 · 결제</h2>
+          <span style="align-self:flex-start;font-size:12px;padding:4px 10px;border-radius:999px;border:1px dashed #7a6250;color:#5a4230">데모 화면 · 실제 결제는 이루어지지 않아요</span>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:20px;align-items:start">
+          <div style="display:flex;flex-direction:column;gap:20px">
+            <div style="background:#e6d6bf;border:1px solid #c2a886;border-radius:18px;padding:22px;display:flex;flex-direction:column;gap:4px">
+              <span style="font-size:16px;font-weight:700;margin-bottom:8px">주문 내역</span>
+              <sc-for list="{{ orderLines }}" as="l" hint-placeholder-count="4">
+                <div style="display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;padding:10px 0;border-bottom:1px solid #c2a886">
+                  <div style="display:flex;flex-direction:column;gap:2px;min-width:0">
+                    <span style="font-size:12px;color:#7a6250">{{ l.group }}</span>
+                    <span style="font-size:15px;font-weight:500">{{ l.name }}</span>
+                    <span style="font-size:12px;color:#6b5443">{{ l.note }}</span>
+                  </div>
+                  <span style="font-size:15px;font-weight:600">{{ l.priceText }}</span>
+                </div>
+              </sc-for>
+            </div>
+            <div style="background:#e6d6bf;border:1px solid #c2a886;border-radius:18px;padding:22px;display:flex;flex-direction:column;gap:12px">
+              <span style="font-size:16px;font-weight:700">결제 수단</span>
+              <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px">
+                <sc-for list="{{ payMethods }}" as="p" hint-placeholder-count="4">
+                  <button onClick="{{ p.pick }}" style="border:1px solid {{ p.border }};border-radius:12px;padding:14px;font-size:15px;background:{{ p.bg }};color:{{ p.fg }}">{{ p.label }}</button>
+                </sc-for>
+              </div>
+            </div>
+          </div>
+          <div style="position:sticky;top:84px;background:#2a1f17;color:#efe3d2;border-radius:18px;padding:24px;display:flex;flex-direction:column;gap:12px">
+            <div style="display:flex;justify-content:space-between;font-size:14px;color:#b9a48c"><span>상품 금액</span><span>{{ orderSubText }}</span></div>
+            <div style="display:flex;justify-content:space-between;font-size:14px;color:#b9a48c"><span>쿠폰 할인</span><span>{{ orderDiscText }}</span></div>
+            <div style="display:flex;justify-content:space-between;font-size:14px;color:#b9a48c"><span>현장 결제 (식사 잔액)</span><span>{{ orderOnsiteText }}</span></div>
+            <div style="display:flex;justify-content:space-between;align-items:baseline;border-top:1px solid #5a4a3e;padding-top:14px"><span style="font-size:15px">지금 결제할 금액</span><span style="font-size:26px;font-weight:700">{{ orderPayText }}</span></div>
+            <button onClick="{{ toggleAgree }}" style="display:flex;gap:10px;align-items:flex-start;text-align:left;border:none;background:transparent;color:#dccbb5;padding:4px 0;font-size:13px;line-height:1.5">
+              <span style="flex:none;width:18px;height:18px;border-radius:5px;border:1px solid #c9b08f;background:{{ agreeBox }};margin-top:1px"></span>
+              <span>예약 취소·환불 규정과 개인정보 제공에 동의해요</span>
+            </button>
+            <button onClick="{{ pay }}" style="border:none;border-radius:999px;padding:17px;font-size:16px;font-weight:700;background:{{ payBg }};color:#2a1f17">{{ payLabel }}</button>
+            <span style="font-size:12px;color:#b9a48c;line-height:1.5">식당은 예약금만 먼저 결제하고, 나머지는 현장에서 결제해요.</span>
+          </div>
+        </div>
+      </section>
+    </sc-if>
+
+    <sc-if value="{{ isDone }}" hint-placeholder-val="{{ false }}">
+      <section data-screen-label="09 결제 완료" style="padding:96px 0;max-width:560px;margin:0 auto;display:flex;flex-direction:column;align-items:center;gap:18px;text-align:center">
+        <span style="width:64px;height:64px;border-radius:50%;background:#3d2b1f;color:#efe3d2;display:flex;align-items:center;justify-content:center;font-size:28px">✓</span>
+        <h2 style="margin:0;font-family:'Josefin Sans','Noto Sans KR',sans-serif;font-size:40px;font-weight:300">All set.</h2>
+        <span style="font-size:17px;font-weight:600">예약과 결제가 완료됐어요</span>
+        <span style="font-size:14px;color:#6b5443;line-height:1.7">주문번호 {{ orderNo }} · {{ payMethodLabel }} · {{ orderPayText }}<br>확정 안내는 카카오톡으로 보내드려요. 서프라이즈 모드는 그대로 유지돼요.</span>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:8px">
+          <button onClick="{{ goChat }}" style="border:none;border-radius:999px;padding:14px 22px;font-size:15px;background:#3d2b1f;color:#efe3d2">연인에게 힌트만 보내기</button>
+          <button onClick="{{ goHome }}" style="border:1px solid #b0946f;border-radius:999px;padding:14px 22px;font-size:15px;background:transparent;color:#2a1f17">홈으로</button>
+        </div>
+      </section>
+    </sc-if>
+
+    <sc-if value="{{ isChat }}" hint-placeholder-val="{{ false }}">
+      <section data-screen-label="07 같이 고민하기" style="padding:40px 0;max-width:720px;margin:0 auto;display:flex;flex-direction:column;gap:16px">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+          <div style="display:flex;align-items:center;gap:12px">
+            <div style="display:flex">
+              <span style="width:40px;height:40px;border-radius:50%;background:#3d2b1f;color:#efe3d2;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:600;border:2px solid #d8c3a5">나</span>
+              <span style="width:40px;height:40px;border-radius:50%;background:#7a6250;color:#efe3d2;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:600;border:2px solid #d8c3a5;margin-left:-10px">{{ partnerInitial }}</span>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:2px">
+              <span style="font-size:18px;font-weight:700">{{ nameWa }} 같이 고민 중</span>
+              <span style="font-size:12px;color:#6b5443">{{ partnerStatus }}</span>
+            </div>
+          </div>
+          <button onClick="{{ copyInvite }}" style="border:1px solid #b0946f;border-radius:999px;padding:9px 16px;font-size:13px;background:#e6d6bf;color:#2a1f17">{{ inviteLabel }}</button>
+        </div>
+
+        <div ref="{{ chatRef }}" style="height:min(56vh,520px);overflow-y:auto;background:#f0e6d8;border:1px solid #c2a886;border-radius:20px;padding:20px;display:flex;flex-direction:column;gap:14px">
+          <sc-for list="{{ messages }}" as="m" hint-placeholder-count="3">
+            <div style="display:flex;flex-direction:column;align-items:{{ m.align }};gap:4px">
+              <span style="font-size:11px;color:#7a6250">{{ m.who }}</span>
+              <sc-if value="{{ m.isText }}" hint-placeholder-val="{{ true }}">
+                <div style="max-width:78%;padding:11px 15px;border-radius:16px;font-size:15px;line-height:1.55;background:{{ m.bg }};color:{{ m.fg }}">{{ m.text }}</div>
+              </sc-if>
+              <sc-if value="{{ m.isPlace }}" hint-placeholder-val="{{ false }}">
+                <div style="width:min(78%,300px);border-radius:16px;overflow:hidden;background:#e6d6bf;border:1px solid #c2a886">
+                  <div style="aspect-ratio:16/8;background:repeating-linear-gradient(135deg,#d0b998 0 10px,#dcc7a9 10px 20px);display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:11px;color:#7a6250">[ {{ m.cat }} 사진 ]</div>
+                  <div style="padding:14px;display:flex;flex-direction:column;gap:8px">
+                    <span style="font-size:12px;color:#6b5443">{{ m.group }} · {{ m.cat }} · {{ m.priceText }}</span>
+                    <span style="font-size:16px;font-weight:700">{{ m.name }}</span>
+                    <div style="display:flex;gap:6px">
+                      <button onClick="{{ m.like }}" style="flex:1;border:1px solid {{ m.likeBorder }};border-radius:10px;padding:8px;font-size:13px;background:{{ m.likeBg }};color:{{ m.likeFg }}">좋아 {{ m.likeCount }}</button>
+                      <button onClick="{{ m.pass }}" style="flex:1;border:1px solid {{ m.passBorder }};border-radius:10px;padding:8px;font-size:13px;background:{{ m.passBg }};color:{{ m.passFg }}">다른 곳 {{ m.passCount }}</button>
+                    </div>
+                  </div>
+                </div>
+              </sc-if>
+            </div>
+          </sc-for>
+          <sc-if value="{{ typing }}" hint-placeholder-val="{{ false }}">
+            <span style="font-size:13px;color:#7a6250">{{ partnerName }}님이 입력 중…</span>
+          </sc-if>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <span style="font-size:13px;color:#6b5443">{{ shareHint }}</span>
+          <div style="display:flex;gap:6px;overflow-x:auto;padding-bottom:4px">
+            <sc-for list="{{ shareChips }}" as="c" hint-placeholder-count="3">
+              <button onClick="{{ c.send }}" style="flex:none;border:1px solid #b0946f;border-radius:999px;padding:8px 14px;font-size:13px;background:#e6d6bf;color:#2a1f17;white-space:nowrap">+ {{ c.name }}</button>
+            </sc-for>
+          </div>
+        </div>
+        <div style="display:flex;gap:8px">
+          <input value="{{ draft }}" onChange="{{ onDraft }}" onKeyDown="{{ onDraftKey }}" placeholder="메시지를 입력하세요" style="flex:1;min-width:0;border:1px solid #b0946f;border-radius:999px;padding:14px 18px;font-size:15px;background:#f0e6d8;color:#2a1f17;outline:none">
+          <button onClick="{{ sendDraft }}" style="border:none;border-radius:999px;padding:0 22px;font-size:15px;font-weight:600;background:#3d2b1f;color:#efe3d2">보내기</button>
+        </div>
+      </section>
+    </sc-if>
+
+    <sc-if value="{{ isPopular }}" hint-placeholder-val="{{ false }}">
+      <section data-screen-label="05 인기 코스" style="padding:56px 0;display:flex;flex-direction:column;gap:28px">
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:#5a4230">POPULAR COURSE</div>
+          <h2 style="margin:0;font-family:'Noto Sans KR',sans-serif;font-size:34px">다른 커플들이 많이 고른 코스</h2>
+          <p style="margin:0;font-size:15px;color:#6b5443">마음에 드는 코스를 고르면 기념일과 MBTI가 채워진 채로 시작해요.</p>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));gap:16px">
+          <sc-for list="{{ popular }}" as="p" hint-placeholder-count="4">
+            <article style="background:#e6d6bf;border:1px solid #c2a886;border-radius:18px;overflow:hidden;display:flex;flex-direction:column">
+              <div style="aspect-ratio:16/9;background:repeating-linear-gradient(135deg,#d0b998 0 10px,#dcc7a9 10px 20px);display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:11px;color:#7a6250;position:relative">
+                <image-slot id="pop-{{ p.rankText }}" shape="rect" placeholder="코스 대표 사진" style="position:absolute;inset:0"></image-slot>
+                <span style="position:absolute;top:12px;left:12px;background:#3d2b1f;color:#efe3d2;font-family:'IBM Plex Mono',monospace;font-size:12px;padding:4px 10px;border-radius:999px">{{ p.rankText }}</span>
+              </div>
+              <div style="padding:20px;display:flex;flex-direction:column;gap:12px;flex:1">
+                <div style="display:flex;justify-content:space-between;font-size:12px;color:#6b5443;gap:8px"><span>{{ p.combo }} · {{ p.occLabel }}</span><span>저장 {{ p.likes }}</span></div>
+                <div style="font-size:20px;font-weight:700;line-height:1.35">{{ p.title }}</div>
+                <div style="display:flex;flex-wrap:wrap;gap:6px;align-items:center">
+                  <sc-for list="{{ p.steps }}" as="st" hint-placeholder-count="4">
+                    <span style="font-size:13px;padding:5px 10px;border-radius:999px;background:#f0e6d8;border:1px solid #c2a886">{{ st.t }}</span>
+                  </sc-for>
+                </div>
+                <div style="font-size:13px;color:#4a3829;line-height:1.6;flex:1">“{{ p.quote }}”</div>
+                <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;border-top:1px solid #c2a886;padding-top:12px">
+                  <span style="font-size:14px;font-weight:600">{{ p.priceText }}</span>
+                  <button onClick="{{ p.use }}" style="border:none;border-radius:999px;padding:10px 16px;font-size:14px;background:#3d2b1f;color:#efe3d2">이 코스로 시작</button>
+                </div>
+              </div>
+            </article>
+          </sc-for>
+        </div>
+      </section>
+    </sc-if>
+
+    <sc-if value="{{ isEvent }}" hint-placeholder-val="{{ false }}">
+      <section data-screen-label="06 이벤트·쿠폰" style="padding:56px 0;display:flex;flex-direction:column;gap:28px">
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:#5a4230">TODAY'S EVENT</div>
+          <h2 style="margin:0;font-family:'Noto Sans KR',sans-serif;font-size:34px">오늘의 이벤트 · 쿠폰</h2>
+        </div>
+        <div style="background:#2a1f17;color:#efe3d2;border-radius:22px;padding:clamp(24px,4vw,44px);display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px;align-items:center">
+          <div style="display:flex;flex-direction:column;gap:12px">
+            <span style="font-family:'Josefin Sans',sans-serif;font-size:15px;letter-spacing:0.12em;color:#c9b08f">ANNIVERSARY WEEK</span>
+            <span style="font-size:clamp(24px,3.4vw,34px);font-weight:700;line-height:1.3">스냅 촬영 + 포토북 같이 담으면 20% 할인</span>
+            <span style="font-size:14px;color:#b9a48c;line-height:1.6">11월 한 달, 기념일 커플만을 위한 묶음 혜택이에요. 쿠폰을 받아두면 플랜 결과에서 자동으로 적용돼요.</span>
+          </div>
+          <div style="aspect-ratio:16/10;border-radius:16px;background:repeating-linear-gradient(135deg,#3a2c22 0 10px,#43342a 10px 20px);display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:11px;color:#b9a48c;position:relative;overflow:hidden"><image-slot id="event-banner" shape="rect" placeholder="이벤트 배너 이미지" style="position:absolute;inset:0"></image-slot></div>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,260px),1fr));gap:14px">
+          <sc-for list="{{ couponCards }}" as="c" hint-placeholder-count="4">
+            <div style="display:grid;grid-template-columns:96px minmax(0,1fr);background:#f0e6d8;border:1px solid {{ c.border }};border-radius:16px;overflow:hidden">
+              <div style="background:#3d2b1f;color:#efe3d2;display:flex;align-items:center;justify-content:center;font-family:'Josefin Sans',sans-serif;font-size:24px;font-weight:600;border-right:2px dashed #f0e6d8">{{ c.off }}</div>
+              <div style="padding:16px;display:flex;flex-direction:column;gap:6px">
+                <span style="font-size:16px;font-weight:600;line-height:1.4">{{ c.title }}</span>
+                <span style="font-size:13px;color:#6b5443">{{ c.sub }}</span>
+                <span style="font-size:12px;color:#7a6250">{{ c.until }}</span>
+                <button onClick="{{ c.toggle }}" style="margin-top:6px;align-self:flex-start;border:1px solid {{ c.border }};border-radius:999px;padding:8px 14px;font-size:13px;background:{{ c.bg }};color:{{ c.fg }}">{{ c.label }}</button>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </section>
+    </sc-if>
+
+    <sc-if value="{{ isWish }}" hint-placeholder-val="{{ false }}">
+      <section data-screen-label="04 찜 목록" style="padding:56px 0;display:flex;flex-direction:column;gap:28px">
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:#5a4230">WISHLIST</div>
+          <h2 style="margin:0;font-family:'Noto Sans KR',sans-serif;font-size:34px">찜한 장소와 선물</h2>
+        </div>
+        <sc-if value="{{ wishEmpty }}" hint-placeholder-val="{{ true }}">
+          <div style="padding:56px 24px;text-align:center;border:1px dashed #b0946f;border-radius:16px;display:flex;flex-direction:column;gap:16px;align-items:center">
+            <span style="color:#6b5443">아직 찜한 항목이 없어요.</span>
+            <button onClick="{{ goInput }}" style="border:none;border-radius:999px;padding:12px 22px;font-size:15px;background:#3d2b1f;color:#efe3d2">기념일 플랜 만들기</button>
+          </div>
+        </sc-if>
+        <div style="display:flex;flex-direction:column;border-top:1px solid #c2a886">
+          <sc-for list="{{ wishItems }}" as="g" hint-placeholder-count="0">
+            <div style="display:grid;grid-template-columns:64px minmax(0,1fr) auto;gap:16px;align-items:center;padding:16px 0;border-bottom:1px solid #c2a886">
+              <div style="width:64px;height:64px;border-radius:12px;background:repeating-linear-gradient(135deg,#d0b998 0 8px,#dcc7a9 8px 16px)"></div>
+              <div style="display:flex;flex-direction:column;gap:4px;min-width:0">
+                <span style="font-size:12px;color:#5a4230">{{ g.group }}</span>
+                <span style="font-family:'Noto Sans KR',sans-serif;font-size:18px;font-weight:700">{{ g.name }}</span>
+                <span style="font-size:13px;color:#6b5443">{{ g.cat }} · {{ g.priceText }}</span>
+              </div>
+              <button onClick="{{ g.toggle }}" style="border:1px solid #b0946f;border-radius:10px;padding:10px 14px;font-size:13px;background:transparent;color:#2a1f17">삭제</button>
+            </div>
+          </sc-for>
+        </div>
+      </section>
+    </sc-if>
+  </main>
+
+  <footer style="border-top:1px solid #c2a886;padding:24px;text-align:center;font-size:12px;color:#7a6250">우리의 날 · MBTI와 별자리는 재미로 참고해주세요</footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;optionCount&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:3,&quot;min&quot;:2,&quot;max&quot;:6,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;추천&quot;}}">
+const GIFTS = [
+  { id:'g1', name:'이니셜 각인 가죽 다이어리', cat:'문구', price:50000, tags:['planner','quality','emotional'], desc:'첫 장에 편지를 적어 건네보세요.' },
+  { id:'g2', name:'노이즈캔슬링 무선 이어폰', cat:'테크', price:300000, tags:['tech','practical','quality'], desc:'매일 쓰는 물건이라 오래 고마워해요.' },
+  { id:'g3', name:'손편지와 폴라로이드 앨범', cat:'감성', price:30000, tags:['emotional','handmade','unique'], desc:'우리 사진을 한 장씩 채워 넣어요.' },
+  { id:'g4', name:'향초 & 디퓨저 세트', cat:'홈', price:40000, tags:['cozy','home','wellness'], desc:'쉬는 시간을 조금 더 특별하게.' },
+  { id:'g5', name:'커플 각인 반지', cat:'주얼리', price:250000, tags:['emotional','quality','luxury'], desc:'기념일 날짜를 안쪽에 새겨요.' },
+  { id:'g6', name:'실크 파자마', cat:'패션', price:120000, tags:['cozy','quality','fashion'], desc:'하루의 끝을 부드럽게 감싸줘요.' },
+  { id:'g7', name:'행성 무드등', cat:'감성', price:50000, tags:['unique','emotional','home'], desc:'밤마다 작은 우주를 켜요.' },
+  { id:'g8', name:'스마트워치', cat:'테크', price:350000, tags:['tech','practical','wellness','planner'], desc:'일정과 건강을 손목에서 관리해요.' },
+  { id:'g9', name:'미니멀 가죽 카드지갑', cat:'패션', price:90000, tags:['fashion','practical','quality'], desc:'매일 꺼낼 때마다 생각나는 선물.' },
+  { id:'g10', name:'필름 카메라', cat:'취미', price:180000, tags:['creative','unique','adventure'], desc:'기다림까지 즐거운 사진을 찍어요.' },
+  { id:'g11', name:'취향 큐레이션 책 박스', cat:'책', price:40000, tags:['book','cozy','unique'], desc:'혼자만의 시간을 채워줄 책 세 권.' },
+  { id:'g12', name:'꽃다발 + 꽃 정기구독', cat:'감성', price:80000, tags:['emotional','home','cozy'], desc:'오늘 한 다발, 그리고 2주마다 또 한 다발.' },
+  { id:'g13', name:'시그니처 향수', cat:'뷰티', price:150000, tags:['fashion','luxury','unique'], desc:'이 날을 향으로 기억하게 해요.' },
+  { id:'g14', name:'마사지건', cat:'웰니스', price:150000, tags:['wellness','practical','tech'], desc:'운동 후, 퇴근 후 뭉친 곳을 풀어줘요.' },
+  { id:'g15', name:'우리 사진 일러스트 액자', cat:'감성', price:60000, tags:['emotional','handmade','creative'], desc:'함께 찍은 사진을 그림으로 남겨요.' }
+];
+const LUNCH = [
+  { id:'l1', name:'햇살 드는 브런치 카페', cat:'브런치', price:40000, tags:['cozy','emotional'], desc:'느긋하게 시작하는 기념일 아침 겸 점심.' },
+  { id:'l2', name:'한옥 한식 정식', cat:'한식', price:50000, tags:['quality','practical','cozy'], desc:'정갈한 반찬과 마당 풍경까지.' },
+  { id:'l3', name:'수제버거 펍', cat:'양식', price:35000, tags:['social','adventure'], desc:'가볍고 신나게, 에너지 충전.' },
+  { id:'l4', name:'생면 파스타 비스트로', cat:'이탈리안', price:55000, tags:['emotional','social','quality'], desc:'창가 자리에서 나눠 먹는 파스타.' },
+  { id:'l5', name:'정갈한 일식 덮밥집', cat:'일식', price:30000, tags:['practical','quality'], desc:'줄 서도 아깝지 않은 한 그릇.' },
+  { id:'l6', name:'플랜트 베이스 레스토랑', cat:'비건', price:45000, tags:['wellness','unique','creative'], desc:'가볍지만 새로운 맛의 조합.' },
+  { id:'l7', name:'골목 노포 맛집', cat:'한식', price:25000, tags:['adventure','practical','social'], desc:'숨은 맛집 찾는 재미가 있어요.' },
+  { id:'l8', name:'딤섬 전문점', cat:'중식', price:45000, tags:['social','unique'], desc:'여러 개 시켜서 나눠 먹기 좋아요.' }
+];
+const DINNER = [
+  { id:'d1', name:'카운터석 오마카세', cat:'일식 코스', price:300000, tags:['quality','luxury','unique'], desc:'셰프와 대화하며 즐기는 한 점 한 점.' },
+  { id:'d2', name:'야경 루프탑 파인다이닝', cat:'코스 요리', price:350000, tags:['emotional','luxury','social'], desc:'도시 불빛 아래 건배하는 기념일.' },
+  { id:'d3', name:'프렌치 코스 레스토랑', cat:'프렌치', price:320000, tags:['quality','emotional','luxury'], desc:'디저트 타이밍에 레터링 플레이트 요청 가능.' },
+  { id:'d4', name:'모던 한식 코스 다이닝', cat:'한식 코스', price:220000, tags:['quality','practical','cozy'], desc:'익숙한 맛을 새롭게, 계절 재료로.' },
+  { id:'d5', name:'내추럴 와인 비스트로', cat:'와인바', price:120000, tags:['social','creative','unique'], desc:'편안한 분위기에서 길게 대화하기.' },
+  { id:'d6', name:'프라이빗 룸 스테이크하우스', cat:'스테이크', price:200000, tags:['quality','cozy','luxury'], desc:'둘만의 룸에서 조용히.' },
+  { id:'d7', name:'리버뷰 이탈리안', cat:'이탈리안', price:150000, tags:['emotional','cozy','social'], desc:'창밖 강 풍경이 분위기를 다 해줘요.' },
+  { id:'d8', name:'셰프 테이블 이노베이티브', cat:'코스 요리', price:280000, tags:['creative','unique','adventure'], desc:'매 접시가 작은 공연 같은 저녁.' }
+];
+const ACTIVITY = [
+  { name:'전시회 관람', tags:['creative','unique','book'], note:'관람 후 가장 좋았던 작품 하나씩 말해보기.' },
+  { name:'커플 공방 클래스', tags:['handmade','creative','emotional'], note:'반지·향초·도자기 중 골라 함께 만들어요.' },
+  { name:'고궁·한옥마을 산책', tags:['cozy','emotional','quality'], note:'걷다가 사진 한 장씩 남기기.' },
+  { name:'방탈출 카페', tags:['social','adventure'], note:'둘의 팀워크를 확인하는 시간.' },
+  { name:'놀이공원', tags:['adventure','social','experience'], note:'일찍 들어가 저녁 전에 나오기.' },
+  { name:'북카페 & 독립서점 투어', tags:['book','cozy','unique'], note:'서로에게 책 한 권씩 골라주기.' },
+  { name:'바다 드라이브', tags:['outdoor','adventure','emotional'], note:'해 지기 전 바다를 보고 돌아와요.' },
+  { name:'한강 피크닉', tags:['outdoor','cozy','social'], note:'돗자리와 간단한 디저트만 챙겨요.', notWinter:true },
+  { name:'아이스링크 데이트', tags:['adventure','social'], note:'손잡고 타기 좋은 겨울 코스.', winterOnly:true },
+  { name:'커플 스파', tags:['wellness','cozy'], note:'저녁 전에 컨디션을 풀어둬요.' }
+];
+const NIGHT = [
+  { name:'야경 전망대', tags:['emotional','social'], note:'가장 높은 곳에서 하루를 마무리.' },
+  { name:'LP바에서 한 잔', tags:['cozy','unique','creative'], note:'서로의 노래를 신청해보세요.' },
+  { name:'강변 야경 산책', tags:['cozy','emotional','outdoor'], note:'걸으며 1년 전 이야기 꺼내기.' },
+  { name:'호텔 라운지 바', tags:['luxury','quality'], note:'조용한 칵테일 한 잔.' }
+];
+const REVIEWS = {
+  l1:[['20대 · 100일','창가 자리 햇살이 좋아서 사진이 다 잘 나와요.',5],['30대 · 1주년','웨이팅 30분, 프렌치토스트가 보상해줬어요.',4]],
+  l2:[['30대 · 생일','반찬 하나하나 정성이 느껴져요.',5],['20대 · 200일','마당 뷰 자리는 예약 필수예요.',4]],
+  l3:[['20대 · 그냥 특별한 날','양 많고 분위기 신나요. 활발한 커플 추천.',4],['20대 · 100일','감자튀김이 정말 맛있어요.',5]],
+  l4:[['20대 · 1주년','생면이라 식감이 달라요. 나눠 먹기 좋은 양.',5],['30대 · 크리스마스','시즌 한정 메뉴가 특히 좋았어요.',4]],
+  l5:[['20대 · 200일','회전이 빨라서 웨이팅이 금방 빠져요.',4],['30대 · 생일','연어 두께에 감동했어요.',5]],
+  l6:[['20대 · 100일','비건인지 모를 만큼 맛있어요.',5],['30대 · 1주년','조용하고 깔끔해서 대화하기 좋아요.',4]],
+  l7:[['30대 · 그냥 특별한 날','찾아가는 길부터 여행 온 느낌.',5],['20대 · 200일','현금만 받는 날도 있으니 참고하세요.',4]],
+  l8:[['20대 · 발렌타인','샤오롱바오는 꼭 드세요.',5],['30대 · 1주년','주말엔 예약 안 하면 오래 기다려요.',4]],
+  d1:[['30대 · 1주년','기념일이라고 하니 한 점 서비스를 주셨어요.',5],['20대 · 생일','가격은 있지만 후회 없는 경험.',5]],
+  d2:[['20대 · 1주년','해 질 녘 예약하면 노을부터 야경까지 다 봐요.',5],['30대 · 크리스마스','바람 불면 추우니 겉옷 챙기세요.',4]],
+  d3:[['30대 · 생일','레터링 플레이트를 정말 예쁘게 써주셨어요.',5],['20대 · 2주년','코스가 길어서 3시간은 잡아야 해요.',4]],
+  d4:[['30대 · 1주년','한식이 이렇게 세련될 수 있구나 싶었어요.',5],['20대 · 200일','양이 생각보다 넉넉해요.',4]],
+  d5:[['20대 · 100일','취향 맞춰 와인을 추천해줘서 좋았어요.',5],['30대 · 그냥 특별한 날','시끄럽지 않아 대화하기 좋아요.',4]],
+  d6:[['30대 · 1주년','룸이라 둘만 있는 느낌이에요.',5],['20대 · 생일','굽기를 정말 정확하게 맞춰줘요.',5]],
+  d7:[['20대 · 200일','창가석은 예약할 때 꼭 말해두세요.',5],['30대 · 발렌타인','분위기 대비 가격이 합리적이에요.',4]],
+  d8:[['30대 · 2주년','매 접시 설명 듣는 재미가 있어요.',5],['20대 · 1주년','새로운 걸 좋아하는 연인이면 무조건.',5]]
+};
+const LEGS = {
+  car:[['차로 약 15분','목적지 근처 공영주차장 · 2시간 약 6,000원'],['차로 약 10분','골목 주차가 어려워요. 주차장을 미리 찍어두세요.'],['차로 약 20분','식당 발렛 가능 여부를 예약할 때 확인하세요.'],['차로 약 15분','와인을 마신다면 대리운전을 미리 예약 · 약 2만원']],
+  transit:[['지하철 약 20분 · 환승 1회','역 출구에서 도보 5분'],['버스 약 15분','정류장 하차 후 도보 3분'],['지하철 약 25분','퇴근 시간대라 혼잡해요. 10분 여유를 두세요.'],['택시 약 15분 · 약 1만원','막차 시간 전 귀가 루트를 확인하세요.']]
+};
+const MOVE_SUM = { car:{ time:'약 60분', cost:'약 3만원', note:'주차 + 대리운전' }, transit:{ time:'약 75분', cost:'약 2만원', note:'2인 교통비 + 택시' } };
+const LIKES = [['카페','cozy','emotional'],['전시·예술','creative','unique'],['음악·공연','social','experience','emotional'],['운동·아웃도어','outdoor','adventure','wellness'],['맛집 탐방','adventure','practical','social'],['패션','fashion','quality'],['뷰티·향','fashion','wellness','luxury'],['독서','book','cozy'],['사진','creative','experience'],['테크·게임','tech','social'],['여행','adventure','planner','outdoor'],['와인·술','social','quality'],['집콕','home','cozy'],['손으로 만들기','handmade','creative']];
+const PERSONAS = [['다정한','emotional','handmade'],['수줍은','cozy','home'],['활발한','social','adventure'],['꼼꼼한','planner','quality'],['즉흥적인','experience','unique'],['낭만적인','emotional','luxury'],['실용적인','practical','tech'],['호기심 많은','unique','creative']];
+const DISLIKES = [['사람 많은 곳','social'],['오래 걷기','outdoor','adventure'],['비싼 선물은 부담','luxury'],['너무 튀는 이벤트','unique','experience'],['실용성 없는 물건','emotional']];
+const COUPONS = [
+  { id:'c1', off:'20%', title:'스냅 + 포토북 묶음 할인', sub:'커플 스냅 촬영과 포토북을 함께 담을 때', until:'11월 30일까지' },
+  { id:'c2', off:'10%', title:'첫 플랜 부가 서비스 할인', sub:'부가 서비스 전체 금액에서', until:'오늘 자정까지' },
+  { id:'c3', off:'5천원', title:'꽃다발 할인', sub:'계절 꽃다발을 담을 때', until:'이번 주 일요일까지' },
+  { id:'c4', off:'무료', title:'선물 포장 무료', sub:'선물 포장 + 당일 배송 서비스', until:'선착순 100명' }
+];
+const POPULAR = [
+  { title:'창가 햇살 브런치부터 루프탑 야경까지', combo:'INFP × ENFJ', occ:'1y', mbti:{ EI:'I', SN:'N', TF:'F', JP:'P' }, likes:1284, steps:['브런치 카페','커플 공방 클래스','루프탑 파인다이닝','야경 전망대'], price:520000, quote:'공방에서 만든 반지를 저녁에 다시 꺼냈는데 반응이 최고였어요.' },
+  { title:'한옥 산책과 모던 한식으로 차분한 100일', combo:'ISFJ × ISTJ', occ:'100', mbti:{ EI:'I', SN:'S', TF:'F', JP:'J' }, likes:962, steps:['한옥 한식 정식','고궁 산책','모던 한식 코스','강변 야경 산책'], price:330000, quote:'조용한 걸 좋아하는 연인이라 딱 맞았어요.' },
+  { title:'방탈출로 시작하는 짜릿한 생일', combo:'ESTP × ENFP', occ:'bday', mbti:{ EI:'E', SN:'S', TF:'T', JP:'P' }, likes:847, steps:['수제버거 펍','방탈출 카페','셰프 테이블','LP바'], price:410000, quote:'하루 종일 웃다가 저녁 코스에서 감동으로 마무리.' },
+  { title:'겨울 아이스링크와 프렌치 크리스마스', combo:'ENFJ × INTJ', occ:'xmas', mbti:{ EI:'E', SN:'N', TF:'F', JP:'J' }, likes:1530, steps:['생면 파스타 비스트로','아이스링크 데이트','프렌치 코스','호텔 라운지 바'], price:610000, quote:'레터링 케이크까지 추가했더니 완벽한 크리스마스였어요.' }
+];
+const ADDONS = [
+  { id:'a1', name:'계절 꽃다발', cat:'꽃', price:50000, tags:['emotional','cozy'], desc:'저녁 식당에 미리 배달해 테이블 위에 올려둬요.' },
+  { id:'a2', name:'레터링 케이크', cat:'케이크', price:45000, tags:['emotional','social','handmade'], desc:'원하는 문구를 케이크 위에 써드려요.' },
+  { id:'a3', name:'디저트 레터링 플레이트', cat:'레스토랑', price:10000, tags:['emotional','quality','luxury'], desc:'디저트 접시에 초콜릿으로 문구를 적어줘요.' },
+  { id:'a4', name:'풍선 & 꽃 데코', cat:'이벤트', price:80000, tags:['unique','experience','social'], desc:'숙소나 집을 깜짝 공간으로 꾸며요.' },
+  { id:'a5', name:'커플 스냅 촬영 30분', cat:'사진', price:120000, tags:['creative','experience','adventure'], desc:'오후 데이트 중 자연스러운 모습을 담아요.' },
+  { id:'a6', name:'캘리그라피 손편지', cat:'편지', price:20000, tags:['handmade','emotional','book'], desc:'마음은 내가 쓰고, 글씨는 작가가 옮겨요.' },
+  { id:'a7', name:'선물 포장 + 식당 당일 배송', cat:'배송', price:15000, tags:['emotional','quality','practical'], desc:'고른 선물을 예쁘게 포장해 저녁 식당으로 바로 보내요. 하루 종일 들고 다닐 필요가 없어요.' },
+  { id:'a8', name:'스냅 사진 포토북', cat:'사진', price:59000, tags:['emotional','creative','handmade'], desc:'그날 찍은 사진을 하드커버 포토북으로 만들어 2주 안에 보내드려요.' }
+];
+const OCCASIONS = [
+  { k:'100', label:'100일', tags:['emotional','handmade'], tip:'100일엔 화려함보다 마음이 담긴 디테일이 좋아요.' },
+  { k:'200', label:'200일', tags:['emotional','unique'], tip:'익숙해진 만큼 새로운 경험을 하나 넣어보세요.' },
+  { k:'1y', label:'1주년', tags:['luxury','quality','emotional'], tip:'1주년은 저녁을 하이라이트로. 미리 예약은 필수예요.' },
+  { k:'2y', label:'2주년 이상', tags:['quality','luxury'], tip:'처음 갔던 곳과 비슷한 분위기를 다시 찾아보세요.' },
+  { k:'bday', label:'연인 생일', tags:['emotional','luxury','fashion'], tip:'디저트에 생일 레터링을 요청해보세요.' },
+  { k:'xmas', label:'크리스마스', tags:['cozy','emotional','social'], tip:'크리스마스 저녁은 한 달 전 예약을 추천해요.' },
+  { k:'val', label:'발렌타인 · 화이트데이', tags:['emotional','handmade'], tip:'초콜릿이나 사탕에 손편지를 곁들여보세요.' },
+  { k:'etc', label:'그냥 특별한 날', tags:['unique','experience'], tip:'이유 없는 기념일이 가장 오래 기억돼요.' }
+];
+const MBTI_SRC = {
+  E:{ label:'외향(E) · 함께 북적이는 걸 좋아함', tags:['social','experience','outdoor','adventure'] },
+  I:{ label:'내향(I) · 조용한 둘만의 공간 선호', tags:['cozy','home','book','quality'] },
+  S:{ label:'감각(S) · 확실하고 실용적인 것', tags:['practical','quality','fashion'] },
+  N:{ label:'직관(N) · 새롭고 독특한 것', tags:['creative','unique','book'] },
+  T:{ label:'사고(T) · 기능과 완성도 중시', tags:['tech','practical','planner','quality'] },
+  F:{ label:'감정(F) · 마음과 분위기에 감동', tags:['emotional','handmade','wellness','cozy'] },
+  J:{ label:'판단(J) · 계획된 하루를 좋아함', tags:['planner','quality','practical'] },
+  P:{ label:'인식(P) · 즉흥적인 재미를 즐김', tags:['experience','adventure','unique'] }
+};
+const ELEMENTS = {
+  fire:{ name:'불의 별자리', desc:'열정적이고 모험을 즐겨요', tags:['adventure','experience','outdoor'] },
+  earth:{ name:'흙의 별자리', desc:'현실적이고 품질을 따져요', tags:['practical','quality','wellness'] },
+  air:{ name:'바람의 별자리', desc:'호기심 많고 사교적이에요', tags:['social','creative','tech'] },
+  water:{ name:'물의 별자리', desc:'섬세하고 감성이 풍부해요', tags:['emotional','cozy','handmade'] }
+};
+const ZODIAC = [['염소자리',1,19,'earth'],['물병자리',2,18,'air'],['물고기자리',3,20,'water'],['양자리',4,19,'fire'],['황소자리',5,20,'earth'],['쌍둥이자리',6,21,'air'],['게자리',7,22,'water'],['사자자리',8,22,'fire'],['처녀자리',9,22,'earth'],['천칭자리',10,23,'air'],['전갈자리',11,22,'water'],['사수자리',12,21,'fire'],['염소자리',12,31,'earth']];
+const DDI = ['쥐','소','호랑이','토끼','용','뱀','말','양','원숭이','닭','개','돼지'];
+const NICK = { ISTJ:'믿음직한 현실주의자', ISFJ:'조용한 수호자', INFJ:'깊은 통찰가', INTJ:'치밀한 전략가', ISTP:'손재주 많은 탐험가', ISFP:'감성 예술가', INFP:'다정한 몽상가', INTP:'호기심 많은 사색가', ESTP:'짜릿한 모험가', ESFP:'분위기 메이커', ENFP:'반짝이는 활동가', ENTP:'재치 있는 발명가', ESTJ:'든든한 리더', ESFJ:'따뜻한 챙김러', ENFJ:'열정적인 응원단장', ENTJ:'대담한 지휘관' };
+const AXES = [['EI',[['E','외향 · 사람들과 에너지 충전'],['I','내향 · 혼자만의 시간 필요']]],['SN',[['S','감각 · 현실적, 구체적'],['N','직관 · 상상력, 가능성']]],['TF',[['T','사고 · 논리와 효율'],['F','감정 · 공감과 마음']]],['JP',[['J','판단 · 계획형'],['P','인식 · 즉흥형']]]];
+const BUDGETS = [
+  { k:'low', label:'알뜰하게', sub:'20만원 이하', dinnerMax:130000, giftMax:60000 },
+  { k:'mid', label:'적당히 특별하게', sub:'20~50만원', dinnerMax:250000, giftMax:160000 },
+  { k:'high', label:'제대로 특별하게', sub:'50만원 이상', dinnerMax:9e9, giftMax:9e9 }
+];
+const SEASON = m => m >= 3 && m <= 5 ? '봄' : m >= 6 && m <= 8 ? '여름' : m >= 9 && m <= 11 ? '가을' : '겨울';
+const ACC = '#3d2b1f';
+const won = p => `${Math.round(p / 10000)}만원대`;
+
+class Component extends DCLogic {
+  state = { screen:'home', occ:null, annDate:'', name:'', mbti:{ EI:null, SN:null, TF:null, JP:null }, y:'', m:'', d:'', budget:'mid', wish:[], shuffle:0, addons:[], lettering:'', transport:'car', coupons:[], likes:[], personas:[], dislikes:[], surprise:true, chat:[], draft:'', typing:false, invited:false };
+  componentDidMount() { try { const w = JSON.parse(localStorage.getItem('ourday_wish') || '[]'); if (Array.isArray(w)) this.setState({ wish:w }); } catch (e) {} }
+  componentWillUnmount() { clearTimeout(this.t); clearTimeout(this.rt); }
+  chatRef = React.createRef();
+  componentDidUpdate() { const el = this.chatRef.current; if (el) el.scrollTop = el.scrollHeight; }
+  loadChat() {
+    if (this.chatLoaded) return; this.chatLoaded = true;
+    try { const c = JSON.parse(localStorage.getItem('ourday_chat') || 'null'); if (Array.isArray(c) && c.length) { this.setState({ chat:c }); return; } } catch (e) {}
+    this.setState({ chat:[{ from:'you', type:'text', text:'이번 기념일 어디 갈지 같이 정하자! 마음에 드는 곳 있으면 보내줘' }] });
+  }
+  saveChat(chat) { this.setState({ chat }); try { localStorage.setItem('ourday_chat', JSON.stringify(chat.slice(-60))); } catch (e) {} }
+  pushMsg(msg) {
+    const chat = [...this.state.chat, { ...msg, from:'me', likes:0, passes:0, myVote:null }];
+    this.saveChat(chat);
+    clearTimeout(this.rt); this.setState({ typing:true });
+    this.rt = setTimeout(() => {
+      const txt = msg.type === 'place'
+        ? ['오 여기 좋다! 분위기 괜찮아 보여', '여기 후기 좋던데? 예약 되나 봐줘', '음 가격은 좀 있는데 기념일이니까 괜찮아', '다른 데도 하나만 더 보자!'][this.state.chat.length % 4]
+        : ['좋아 좋아', 'ㅋㅋ 그럼 그렇게 하자', '나는 저녁만 특별하면 다 좋아', '시간은 몇 시쯤 만날까?'][this.state.chat.length % 4];
+      const c2 = this.state.chat.map((m, i) => i === this.state.chat.length - 1 && m.type === 'place' && txt.startsWith('오') ? { ...m, likes:(m.likes || 0) + 1 } : m);
+      this.saveChat([...c2, { from:'you', type:'text', text:txt }]); this.setState({ typing:false });
+    }, 1300);
+  }
+  sharePlace(x, group) { this.pushMsg({ type:'place', name:x.name, cat:x.cat, price:x.price, group, hidden:this.state.surprise }); }
+  toggleIn(key, v, max) { this.setState(st => { const a = st[key]; if (a.includes(v)) return { [key]:a.filter(x => x !== v) }; if (max && a.length >= max) return null; return { [key]:[...a, v] }; }); }
+  vote(i, kind) {
+    const chat = this.state.chat.map((m, j) => { if (j !== i) return m; const prev = m.myVote; const n = { ...m, likes:m.likes || 0, passes:m.passes || 0 };
+      if (prev === 'like') n.likes--; if (prev === 'pass') n.passes--;
+      if (prev === kind) n.myVote = null; else { n.myVote = kind; if (kind === 'like') n.likes++; else n.passes++; }
+      return n; });
+    this.saveChat(chat);
+  }
+  toggleWish(id) { const w = this.state.wish.includes(id) ? this.state.wish.filter(x => x !== id) : [...this.state.wish, id]; this.setState({ wish:w }); try { localStorage.setItem('ourday_wish', JSON.stringify(w)); } catch (e) {} }
+  go(screen) { this.setState({ screen }); window.scrollTo(0, 0); }
+  zodiacOf(m, d) { for (const z of ZODIAC) if (m < z[1] || (m === z[1] && d <= z[2])) return z; return ZODIAC[0]; }
+  rank(list, sources) {
+    return list.map(g => {
+      const all = sources.map(s => ({ label:s.label, n:s.tags.filter(t => g.tags.includes(t)).length * (s.w || 1) }));
+      const c = all.filter(x => x.n > 0).sort((a, b) => b.n - a.n);
+      return { g, score:all.reduce((a, x) => a + x.n, 0), reason:c.slice(0, 2).map(x => x.label).join(' + ') || '누구와도 무난한 선택' };
+    }).sort((a, b) => b.score - a.score || a.g.price - b.g.price);
+  }
+  card(r, i) {
+    const on = this.state.wish.includes(r.g.id);
+    const rv = REVIEWS[r.g.id] || [];
+    const num = parseInt(String(r.g.id).slice(1)) || 1;
+    return { ...r.g, hasReviews:rv.length > 0,
+      reviews:rv.map(([who, text, st]) => ({ who, text, stars:'★'.repeat(st) + '☆'.repeat(5 - st) })),
+      ratingText:rv.length ? (4.3 + ((num * 7) % 6) / 10).toFixed(1) : '', reviewCount:String(60 + (num * 37) % 240), reason:r.reason, priceText:won(r.g.price), imgLabel:`[ ${r.g.cat} 사진 ]`, rankText:i === 0 ? 'BEST' : `TOP ${i + 1}`,
+      heartLabel:on ? '찜 완료' : '찜하기', heartBg:on ? ACC : 'transparent', heartFg:on ? '#efe3d2' : '#2a1f17', heartBorder:on ? ACC : '#b0946f',
+      darkBg:on ? ACC : 'transparent', darkBorder:on ? ACC : '#5a4a3e', toggle:() => this.toggleWish(r.g.id),
+      shareLabel:'연인에게 톡으로 공유', share:() => { this.loadChat(); this.sharePlace(r.g, String(r.g.id)[0] === 'l' ? '점심' : String(r.g.id)[0] === 'd' ? '저녁' : '선물'); this.go('chat'); } };
+  }
+  renderVals() {
+    const s = this.state;
+    const code = AXES.map(([k]) => s.mbti[k] || '_').join('');
+    const mbtiDone = AXES.every(([k]) => s.mbti[k]);
+    const y = +s.y, m = +s.m, d = +s.d;
+    const dateDone = !!(y && m && d);
+    const z = dateDone ? this.zodiacOf(m, d) : null;
+    const el = z ? ELEMENTS[z[3]] : null;
+    const ddi = y ? DDI[((y - 4) % 12 + 12) % 12] : null;
+    const occ = OCCASIONS.find(o => o.k === s.occ);
+    const ready = mbtiDone && dateDone && !!occ;
+    const ann = s.annDate ? new Date(s.annDate + 'T00:00:00') : null;
+    const today = new Date(); today.setHours(0, 0, 0, 0);
+    const dd = ann ? Math.round((ann - today) / 86400000) : null;
+    const ddayText = dd === null ? '' : dd === 0 ? '오늘이 바로 그날이에요' : dd > 0 ? `D-${dd} · ${SEASON(ann.getMonth() + 1)} 데이트` : `${-dd}일 지났어요 · 늦은 축하도 좋아요`;
+    const season = ann ? SEASON(ann.getMonth() + 1) : SEASON(today.getMonth() + 1);
+    const budget = BUDGETS.find(b => b.k === s.budget);
+    const nameOr = s.name.trim() || '연인';
+    const years = []; for (let i = 2012; i >= 1960; i--) years.push({ v:String(i), t:`${i}년` });
+    const months = Array.from({ length:12 }, (_, i) => ({ v:String(i + 1), t:`${i + 1}월` }));
+    const dim = new Date(y || 2000, m || 1, 0).getDate();
+    const days = Array.from({ length:dim }, (_, i) => ({ v:String(i + 1), t:`${i + 1}일` }));
+    const sel = on => ({ bg:on ? ACC : '#e6d6bf', fg:on ? '#efe3d2' : '#2a1f17', border:on ? ACC : '#b0946f' });
+
+    let lunches = [], dinners = [], gifts = [], course = [], total = 0, addonCards = [], discount = 0, orderDraft = null;
+    if (s.screen === 'result' && ready) {
+      const src = code.split('').map(l => MBTI_SRC[l]);
+      src.push({ label:`${occ.label}에 어울림`, tags:occ.tags, w:1.5 });
+      src.push({ label:`${z[0]} · ${el.desc}`, tags:el.tags });
+      LIKES.filter(l => s.likes.includes(l[0])).forEach(l => src.push({ label:`평소 ${l[0]} 좋아함`, tags:l.slice(1), w:2 }));
+      PERSONAS.filter(p => s.personas.includes(p[0])).forEach(p => src.push({ label:`${p[0]} 성격`, tags:p.slice(1), w:1.5 }));
+      DISLIKES.filter(d2 => s.dislikes.includes(d2[0])).forEach(d2 => src.push({ label:'', tags:d2.slice(1), w:-2.5 }));
+      const n = this.props.optionCount ?? 3;
+      const sh = s.shuffle;
+      const rot = (arr, k) => arr.slice(k % arr.length).concat(arr.slice(0, k % arr.length));
+      const L = this.rank(LUNCH, src);
+      const D = this.rank(DINNER.filter(x => x.price <= budget.dinnerMax), src);
+      const G = this.rank(GIFTS.filter(x => x.price <= budget.giftMax), src);
+      const acts = ACTIVITY.filter(a => season === '겨울' ? !a.notWinter : !a.winterOnly);
+      const A = this.rank(acts.map((a, i) => ({ ...a, id:'a' + i, price:0 })), src);
+      const N = this.rank(NIGHT.map((a, i) => ({ ...a, id:'n' + i, price:0 })), src);
+      lunches = rot(L.slice(0, n + 2), sh).slice(0, n).map((r, i) => this.card(r, i));
+      dinners = rot(D.slice(0, Math.max(2, n - 1) + 2), sh).slice(0, Math.max(2, n - 1)).map((r, i) => this.card(r, i));
+      gifts = G.slice(0, n).map((r, i) => this.card(r, i));
+      const a = rot(A.slice(0, 4), sh)[0].g, nt = rot(N, sh)[0].g;
+      const lu = lunches[0], di = dinners[0], gi = gifts[0];
+      const isI = s.mbti.EI === 'I';
+      course = [
+        { time:'12:00', kind:'점심', title:lu ? lu.name : '-', note:lu ? lu.desc : '' },
+        { time:'14:00', kind:'오후 데이트', title:a.name, note:a.note },
+        { time:'17:00', kind:'쉬어가기', title:isI ? '조용한 카페에서 한숨 돌리기' : '근처 골목 산책 & 사진 찍기', note:'저녁 전 30분은 꼭 비워두세요. 선물을 숨겨둘 시간이에요.' },
+        { time:'19:00', kind:'특별한 저녁', title:di ? di.name : '-', note:di ? `${di.desc} 디저트가 나올 때 선물을 건네세요.` : '' },
+        { time:'21:30', kind:'마무리', title:nt.name, note:gi ? `${nt.note} 오늘의 선물: ${gi.name}` : nt.note }
+      ].map((c, i, arr) => ({ ...c, dot:c.kind === '특별한 저녁' ? ACC : '#7a6250', line:i === arr.length - 1 ? 'transparent' : '#c2a886' }));
+      total = (lu ? lu.price : 0) + (di ? di.price : 0) + (gi ? gi.price : 0) + 15000 + (s.transport === 'car' ? 30000 : 20000);
+      const has = id => s.addons.includes(id);
+      const letter = s.lettering.trim() || '사랑해';
+      const add = (i, t) => { course[i] = { ...course[i], note:`${course[i].note} · ${t}` }; };
+      if (has('a5')) add(1, '커플 스냅 촬영 예약');
+      if (has('a1')) add(3, '꽃다발은 식당에 미리 맡겨두기');
+      if (has('a3')) add(3, `디저트 레터링 "${letter}"`);
+      if (has('a6')) add(3, '캘리그라피 손편지 함께 전달');
+      if (has('a2')) add(4, `레터링 케이크 "${letter}"로 마무리`);
+      if (has('a4')) add(4, '풍선 & 꽃 데코 공간으로 이동');
+      if (has('a7')) add(3, '포장된 선물이 식당에 미리 도착해 있어요');
+      if (has('a8')) add(4, has('a5') ? '오늘 스냅 사진은 포토북으로 2주 안에 배송' : '포토북에 담을 사진을 함께 골라보세요');
+      const addSum = ADDONS.filter(x => has(x.id)).reduce((a2, x) => a2 + x.price, 0);
+      total += addSum;
+      const cp = id => s.coupons.includes(id);
+      if (cp('c1') && has('a5') && has('a8')) discount += Math.round((120000 + 59000) * 0.2);
+      if (cp('c2')) discount += Math.round(addSum * 0.1);
+      if (cp('c3') && has('a1')) discount += 5000;
+      if (cp('c4') && has('a7')) discount += 15000;
+      total -= discount;
+      const dep = p => Math.min(p, Math.max(10000, Math.round(p * 0.2 / 1000) * 1000));
+      const lines = [];
+      if (lu) lines.push({ group:'점심 예약금', name:lu.name, note:'12:00 · 2인', pay:dep(lu.price), full:lu.price });
+      if (di) lines.push({ group:'저녁 예약금', name:di.name, note:'19:00 · 2인' + (has('a3') ? ' · 레터링 플레이트' : ''), pay:dep(di.price), full:di.price });
+      if (gi) lines.push({ group:'선물', name:gi.name, note:has('a7') ? '포장 후 저녁 식당으로 당일 배송' : '기념일 전날 배송', pay:gi.price, full:gi.price });
+      ADDONS.filter(x => has(x.id)).forEach(x => lines.push({ group:'부가 서비스', name:x.name, note:x.cat, pay:x.price, full:x.price }));
+      const sub = lines.reduce((a2, l) => a2 + l.pay, 0), onsite = lines.reduce((a2, l) => a2 + (l.full - l.pay), 0);
+      orderDraft = { lines:lines.map(l => ({ ...l, priceText:`${l.pay.toLocaleString()}원` })), sub, onsite, discount:Math.min(discount, sub) };
+      const recIds = this.rank(ADDONS, src).slice(0, 2).map(r => r.g.id);
+      addonCards = ADDONS.map(x => { const on = has(x.id); return { ...x, priceText:`${x.price.toLocaleString()}원`, rec:recIds.includes(x.id),
+        btnLabel:on ? '담김' : '추가하기', btnBg:on ? '#3d2b1f' : 'transparent', btnFg:on ? '#efe3d2' : '#2a1f17', btnBorder:on ? '#3d2b1f' : '#b0946f', cardBorder:on ? '#3d2b1f' : '#c2a886',
+        toggle:() => this.setState(st => ({ addons:st.addons.includes(x.id) ? st.addons.filter(i => i !== x.id) : [...st.addons, x.id] })) }; });
+    }
+    const all = [...LUNCH.map(x => ({ ...x, group:'점심' })), ...DINNER.map(x => ({ ...x, group:'저녁' })), ...GIFTS.map(x => ({ ...x, group:'선물' }))];
+    const wishItems = all.filter(x => s.wish.includes(x.id)).map(x => ({ ...x, priceText:won(x.price), toggle:() => this.toggleWish(x.id) }));
+    const filled = [!!occ, mbtiDone, dateDone].filter(Boolean).length;
+    const navBg = on => on ? '#c7ad8b' : 'transparent';
+
+    return {
+      isHome:s.screen === 'home', isInput:s.screen === 'input', isLoading:s.screen === 'loading', isResult:s.screen === 'result', isWish:s.screen === 'wish',
+      navPlanBg:navBg(['input','loading','result'].includes(s.screen)), navWishBg:navBg(s.screen === 'wish'),
+      goHome:() => this.go('home'), goInput:() => this.go('input'), goWish:() => this.go('wish'),
+      wishCount:s.wish.length ? `(${s.wish.length})` : '',
+      progressText:`필수 항목 ${filled} / 3`,
+      occasions:OCCASIONS.map(o => ({ label:o.label, ...sel(s.occ === o.k), pick:() => this.setState({ occ:o.k }) })),
+      annDate:s.annDate, onAnnDate:e => this.setState({ annDate:e.target.value }), hasDday:dd !== null, ddayText,
+      name:s.name, onName:e => this.setState({ name:e.target.value }), nameOr,
+      nameWa:nameOr + (((nameOr.charCodeAt(nameOr.length - 1) - 0xAC00) % 28 > 0) ? '과' : '와'),
+      mbtiPreview:code,
+      axes:AXES.map(([k, opts]) => ({ opts:opts.map(([letter, label]) => ({ letter, label, ...sel(s.mbti[k] === letter), pick:() => this.setState(st => ({ mbti:{ ...st.mbti, [k]:letter } })) })) })),
+      y:s.y, m:s.m, d:s.d, years, months, days,
+      onY:e => this.setState({ y:e.target.value }),
+      onM:e => { const max = new Date(+s.y || 2000, +e.target.value || 1, 0).getDate(); this.setState({ m:e.target.value, d:+s.d > max ? '' : s.d }); },
+      onD:e => this.setState({ d:e.target.value }),
+      hasDatePreview:!!(ddi || z), datePreview:[ddi ? `${ddi}띠` : '', z ? z[0] : ''].filter(Boolean).join(' · '),
+      budgets:BUDGETS.map(b => ({ label:b.label, sub:b.sub, ...sel(s.budget === b.k), pick:() => this.setState({ budget:b.k }) })),
+      submitBg:ready ? ACC : '#c2a886',
+      submit:() => { if (!ready) return; this.go('loading'); clearTimeout(this.t); this.t = setTimeout(() => this.go('result'), 1400); },
+      occLabel:occ ? occ.label : '기념일', zodiacText:z ? z[0] : '', seasonText:`${season} 데이트`,
+      resultKicker:dd !== null && dd >= 0 ? `OUR DAY · D-${dd}` : 'OUR DAY',
+      profileChips:[{ t:`${code} · ${NICK[code] || ''}` }, { t:z ? `${z[0]} · ${el.name}` : '' }, { t:ddi ? `${ddi}띠` : '' }, ...s.likes.map(l => ({ t:`좋아하는 것 · ${l}` })), ...s.personas.map(p => ({ t:`${p} 성격` })), ...s.dislikes.map(d2 => ({ t:`피하기 · ${d2}` })), { t:`${season} · ${budget.label}` }, { t:s.surprise ? '서프라이즈 모드 켜짐' : '' }].filter(c => c.t),
+      likeChips:LIKES.map(l => ({ label:l[0], ...sel(s.likes.includes(l[0])), pick:() => this.toggleIn('likes', l[0]) })),
+      personaChips:PERSONAS.map(p => ({ label:p[0], ...sel(s.personas.includes(p[0])), pick:() => this.toggleIn('personas', p[0], 3) })),
+      dislikeChips:DISLIKES.map(d2 => ({ label:d2[0], ...(s.dislikes.includes(d2[0]) ? { bg:'#7a6250', fg:'#efe3d2', border:'#7a6250' } : { bg:'transparent', fg:'#2a1f17', border:'#b0946f' }), pick:() => this.toggleIn('dislikes', d2[0]) })),
+      likeCountText:s.likes.length ? `${s.likes.length}개 선택` : '여러 개 선택 가능',
+      toggleSurprise:() => this.setState(st => ({ surprise:!st.surprise })),
+      surpriseBg:s.surprise ? '#2a1f17' : '#e6d6bf', surpriseFg:s.surprise ? '#efe3d2' : '#2a1f17', surpriseBorder:s.surprise ? '#2a1f17' : '#c2a886',
+      switchTrack:s.surprise ? '#c9b08f' : '#b0946f', switchAlign:s.surprise ? 'flex-end' : 'flex-start',
+      dinnerTip:occ ? occ.tip : '',
+      course, lunches, dinners, gifts, addonCards,
+      isPopular:s.screen === 'popular', isEvent:s.screen === 'event',
+      navPopBg:navBg(s.screen === 'popular'), navEventBg:navBg(s.screen === 'event'),
+      goPopular:() => this.go('popular'), goEvent:() => this.go('event'),
+      isChat:s.screen === 'chat', navChatBg:navBg(s.screen === 'chat'),
+      isCheckout:s.screen === 'checkout', isDone:s.screen === 'done',
+      goCheckout:() => { if (!orderDraft) return; this.setState({ order:orderDraft, agree:false, payMethod:s.payMethod || 'card' }); this.go('checkout'); },
+      ...(() => { const o = s.order || { lines:[], sub:0, onsite:0, discount:0 }; const payAmt = Math.max(0, o.sub - o.discount); const okPay = !!s.agree && o.lines.length > 0;
+        const PM = [['card','신용·체크카드'],['toss','토스페이'],['kakao','카카오페이'],['bank','계좌이체']];
+        return { orderLines:o.lines, orderSubText:`${o.sub.toLocaleString()}원`, orderDiscText:`-${o.discount.toLocaleString()}원`, orderOnsiteText:`${o.onsite.toLocaleString()}원`, orderPayText:`${payAmt.toLocaleString()}원`,
+          payMethods:PM.map(([k, label]) => ({ label, ...sel((s.payMethod || 'card') === k), pick:() => this.setState({ payMethod:k }) })),
+          payMethodLabel:(PM.find(p => p[0] === (s.payMethod || 'card')) || PM[0])[1],
+          agreeBox:s.agree ? '#c9b08f' : 'transparent', toggleAgree:() => this.setState(st => ({ agree:!st.agree })),
+          payBg:okPay ? '#d8c3a5' : '#5a4a3e', payLabel:okPay ? `${payAmt.toLocaleString()}원 결제하기` : '약관에 동의해 주세요',
+          pay:() => { if (!okPay) return; this.setState({ orderNo:'OD' + Date.now().toString().slice(-8) }); this.go('done'); },
+          orderNo:s.orderNo || '' }; })(),
+      goChat:() => { this.loadChat(); this.go('chat'); },
+      chatRef:this.chatRef,
+      partnerName:nameOr, partnerInitial:nameOr.slice(0, 1),
+      partnerStatus:s.invited ? '초대 링크를 보냈어요 · 함께 보는 중' : '초대 링크를 보내면 같이 볼 수 있어요',
+      inviteLabel:s.invited ? '링크 복사됨' : '초대 링크 복사',
+      copyInvite:() => { try { navigator.clipboard && navigator.clipboard.writeText('https://ourday.app/invite/' + Math.random().toString(36).slice(2, 8)); } catch (e) {} this.setState({ invited:true }); },
+      typing:s.typing,
+      messages:s.chat.map((m, i) => { const me = m.from === 'me';
+        const hide = m.hidden && s.surprise;
+        return { ...m, name:hide ? '서프라이즈 · 당일 공개' : m.name, cat:hide ? '비밀' : m.cat, isText:m.type !== 'place', isPlace:m.type === 'place', align:me ? 'flex-end' : 'flex-start', who:me ? '나' : nameOr,
+          bg:me ? '#3d2b1f' : '#e6d6bf', fg:me ? '#efe3d2' : '#2a1f17', priceText:m.price ? won(m.price) : '',
+          likeCount:String(m.likes || 0), passCount:String(m.passes || 0),
+          likeBg:m.myVote === 'like' ? '#3d2b1f' : 'transparent', likeFg:m.myVote === 'like' ? '#efe3d2' : '#2a1f17', likeBorder:m.myVote === 'like' ? '#3d2b1f' : '#b0946f',
+          passBg:m.myVote === 'pass' ? '#7a6250' : 'transparent', passFg:m.myVote === 'pass' ? '#efe3d2' : '#2a1f17', passBorder:m.myVote === 'pass' ? '#7a6250' : '#b0946f',
+          like:() => this.vote(i, 'like'), pass:() => this.vote(i, 'pass') }; }),
+      shareHint:wishItems.length ? '찜한 곳을 눌러 바로 보내보세요' : '추천 결과에서 찜하거나 "톡으로 공유"를 누르면 여기서 보낼 수 있어요',
+      shareChips:(wishItems.length ? wishItems : [...LUNCH.slice(0, 2).map(x => ({ ...x, group:'점심' })), ...DINNER.slice(0, 2).map(x => ({ ...x, group:'저녁' }))]).map(x => ({ name:x.name, send:() => this.sharePlace(x, x.group) })),
+      draft:s.draft, onDraft:e => this.setState({ draft:e.target.value }),
+      sendDraft:() => { const t = s.draft.trim(); if (!t) return; this.setState({ draft:'' }); this.pushMsg({ type:'text', text:t }); },
+      onDraftKey:e => { if (e.key === 'Enter' && !e.nativeEvent.isComposing) { const t = e.target.value.trim(); if (!t) return; e.preventDefault(); this.setState({ draft:'' }); this.pushMsg({ type:'text', text:t }); } },
+      hasDiscount:discount > 0, discountText:`쿠폰 할인 -${discount.toLocaleString()}원 적용됨`,
+      popular:POPULAR.map((p, i) => ({ ...p, rankText:`TOP ${i + 1}`, occLabel:(OCCASIONS.find(o => o.k === p.occ) || {}).label, likes:p.likes.toLocaleString(), steps:p.steps.map(t => ({ t })), priceText:`약 ${Math.round(p.price / 10000)}만원`,
+        use:() => { this.setState({ occ:p.occ, mbti:{ ...p.mbti } }); this.go('input'); } })),
+      couponCards:COUPONS.map(c => { const on = s.coupons.includes(c.id); return { ...c, label:on ? '받기 완료' : '쿠폰 받기', bg:on ? '#3d2b1f' : 'transparent', fg:on ? '#efe3d2' : '#2a1f17', border:on ? '#3d2b1f' : '#b0946f',
+        toggle:() => this.setState(st => ({ coupons:st.coupons.includes(c.id) ? st.coupons.filter(x => x !== c.id) : [...st.coupons, c.id] })) }; }),
+      courseRows:course.flatMap((c, i) => { const row = { ...c, isStep:true, isMove:false }; if (i === course.length - 1) return [row]; const [how, tip] = LEGS[s.transport][i]; return [row, { isStep:false, isMove:true, modeTag:s.transport === 'car' ? 'CAR' : 'TRANSIT', how, tip }]; }),
+      transports:[['car','자동차'],['transit','대중교통']].map(([k, label]) => ({ label, bg:s.transport === k ? '#3d2b1f' : 'transparent', fg:s.transport === k ? '#efe3d2' : '#2a1f17', pick:() => this.setState({ transport:k }) })),
+      moveStats:[{ k:'총 이동 시간', v:MOVE_SUM[s.transport].time }, { k:'이동 비용', v:MOVE_SUM[s.transport].cost }, { k:'포함 항목', v:MOVE_SUM[s.transport].note }],
+      hasLettering:s.addons.includes('a2') || s.addons.includes('a3'),
+      lettering:s.lettering, onLettering:e => this.setState({ lettering:e.target.value.slice(0, 20) }),
+      letterCount:String(s.lettering.length), letterPreview:s.lettering.trim() || '사랑해',
+      totalText:`약 ${Math.round(total / 10000)}만원`,
+      shuffle:() => this.setState({ shuffle:s.shuffle + 1 }),
+      restart:() => this.setState({ screen:'input', shuffle:0 }),
+      wishItems, wishEmpty:wishItems.length === 0
+    };
+  }
+}
+</script>
+</body>
+</html>
